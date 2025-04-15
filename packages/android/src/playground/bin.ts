@@ -4,7 +4,6 @@ import {
   SCRCPY_SERVER_PORT,
 } from '@midscene/shared/constants';
 import PlaygroundServer from '@midscene/web/midscene-server';
-import open from 'open';
 import { AndroidAgent, AndroidDevice } from '../';
 import ScrcpyServer from './scrcpy-server';
 
@@ -25,7 +24,9 @@ Promise.all([
     console.log(
       `Midscene playground server is running on http://localhost:${playgroundServer.port}`,
     );
-    open(`http://localhost:${playgroundServer.port}`);
+    import('open').then((open) => {
+      open.default(`http://localhost:${playgroundServer.port}`);
+    });
   })
   .catch((error) => {
     console.error('Failed to start servers:', error);
